@@ -2,6 +2,8 @@ body {
   margin: 0;
 }
 
+
+/* tudo que estiver dentro do header estará centralizado */
 header {
   background-color: #06151A;
   padding: 32px;
@@ -17,4 +19,13 @@ section {
 
 section img {
   max-width: 90%;
+}
+
+.form-evento {
+  background-color: #212121;
+  padding: 32px 28px;
+  border-radius: 16px;
+  width: 384px;
+  max-width: 90%;
+  margin: 64px auto;
 }
