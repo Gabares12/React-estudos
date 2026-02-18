@@ -1,4 +1,5 @@
 
+import { useState } from 'react';
 import './App.css'
 import { Banner } from './componentes/Banner';
 import { CardEvento } from './componentes/Card-evento';
@@ -41,48 +42,63 @@ function App() {
     },
   ];
 
-   const eventos = [
+  // const eventos = 
+
+  const [eventos, setEventos] = useState([
     {
       capa: 'https://raw.githubusercontent.com/viniciosneves/tecboard-assets/refs/heads/main/imagem_1.png',
       tema: temas[0],
-      data: new Date (),
+      data: new Date(),
       titulo: 'mulheres no front'
 
     }
-   ]
-  
-  function adiconarEvento(evento) {
-    
+  ])
+
+  function adicionarEvento(evento) {
+
+    //eventos.push(evento)
+    //console.log('eventos =>' , eventos);
     setEventos([...eventos, evento])
-    console.log('eventos =>' , eventos);
-    
+
   }
-   
+
+  // rederização condicional usando &&
   return (
     <main>
       <header>
         <img src="/logo.png" alt="" />
       </header>
       <Banner />
-      <FormularioDeEventos 
-      temas={temas} 
-      aoSubmeter={adiconarEvento}
-      />
-      {temas.map(function (item) {
+      <FormularioDeEventos
+        temas={temas}
+        aoSubmeter={adicionarEvento} 
+        />
+      {temas.map(function (tema) {
+        if (eventos.some(function (evento) {
+           return evento.tema.id ==tema.id
+        })) {
+          return null
+        }
         return (
-          <section key={item.id}>
-            <Tema tema={item} />
+          <section key={tema.id}>
+            <Tema tema={tema} />
+            <div className="eventos">
+            {eventos.filter(function (evento) {
+                return evento.tema.id ==tema.id
+           })
+           .map(function (evento, indice) {
 
-            {eventos.map(function(item, indice){
-
-            return <CardEvento evento={item} key={indice} />
+              return <CardEvento evento={evento} key={indice} />
             })}
+            </div>
+
+
           </section>
         )
       })}
-     
-     
-     {/* { <section>
+
+
+      {/* { <section>
         <Tema tema={temas[0]} />
       </section>
       <section>

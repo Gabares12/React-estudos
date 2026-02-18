@@ -8,7 +8,7 @@ import { ListaSuspensa } from '../ListaSuspensa';
 
 
 export function FormularioDeEventos({ temas, aoSubmeter }) {
-  aoSubmeter
+
   function aoFormSubmetido(formData) {
     console.log('opa, tá na hora de criar um novo evento', formData);
     const evento = {
@@ -20,7 +20,6 @@ export function FormularioDeEventos({ temas, aoSubmeter }) {
       titulo: formData.get('nomeEvento')
     }
     aoSubmeter(evento);
-
   }
   return (
     <form className="form-evento" action={aoFormSubmetido}>
