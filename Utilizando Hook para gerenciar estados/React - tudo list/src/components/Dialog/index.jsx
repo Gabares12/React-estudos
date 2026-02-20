@@ -1,28 +1,48 @@
-import React from "react"
+import React, { useEffect, useRef } from "react";
 
-// funções em react começam COM LETRA MAIUSCULA
-export function Dialog() {
-    const dialog = document.querySelector("dialog");
-    const showButton = document.querySelector("dialog + button");
-    const closeButton = document.querySelector("dialog button");
+import './dialog.style.css'
+import { IconClose } from "../icons";
+
+export function Dialog({ isOpen, onClose, children }) {
+    // não deveríamos fazer buscas no DOM desse jeito!
+    // const dialog = document.querySelector("dialog");
+
+    const dialogRef = useRef(null)
+
+    useEffect(() => {
+        if (isOpen) {
+            openDialog()
+        } else {
+            closeDialog()
+        }
+    }, [isOpen])
 
     // "Show the dialog" button opens the dialog modally
-    const openDialog () => {
-        dialog.showModal();
+    const openDialog = () => {
+        dialogRef.current.showModal();
     };
 
     // "Close" button closes the dialog
-    () => {
-        dialog.close();
+    const closeDialog = () => {
+        dialogRef.current.close();
     };
-    return (
 
-        <>
-            <dialog>
-                <button autofocus>Close</button>
-                <p>This modal dialog has a groovy backdrop!</p>
+    return (
+        <React.Fragment>
+            <dialog ref={dialogRef} className="dialog">
+                <div className="btn-close-wrapper">
+                    <button 
+                        autoFocus 
+                        onClick={onClose} 
+                        className="btn-close"
+                    >
+                        <IconClose />
+                    </button>
+                </div>
+                <div className="body">
+                    {children}
+                </div>
             </dialog>
-            <button>Show the dialog</button>
-        </>
+        </React.Fragment>
     )
 }
